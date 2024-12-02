@@ -9,9 +9,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/school_web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/school_web.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddd.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/left-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/left-sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/no-sidebar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/right-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/right-sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/search_student.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search_student.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +98,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Jekipung/PycharmProjects/school_web/app.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
