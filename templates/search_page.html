@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Student</title>
+    <style>
+        body {
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f4f4f4;
+       }
+
+       /* Navbar 스타일 */
+       .navbar {
+           background-color: #007BFF;
+           color: white;
+           padding: 10px 20px;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+       }
+
+       .navbar a {
+           color: white;
+           text-decoration: none;
+           margin-right: 15px;
+       }
+
+       .navbar a:hover {
+           text-decoration: underline;
+       }
+
+       .navbar .logout-btn {
+           background: none;
+           border: none;
+           color: white;
+           cursor: pointer;
+           font-size: 16px;
+       }
+
+       .navbar .logout-btn:hover {
+           text-decoration: underline;
+       }
+       .container {
+           display: flex;
+           justify-content: space-between;
+       }
+       .user-info, .search-section, .ranking-section {
+           width: 30%;
+           border: 1px solid #ccc;
+           text-align: center;
+           padding: 10px;
+       }
+       .user-info table, .search-section table {
+           width: 100%;
+           text-align: center;
+           border-collapse: collapse;
+       }
+       .user-info table th, .user-info table td,
+       .search-section table th, .search-section table td {
+           border: 2px solid #ddd;
+           padding: 8px;
+           text-align: center;
+       }
+       .ranking-box {
+     height: 300px;
+     overflow-y: scroll;
+     border: 1px solid #ccc;
+     padding: 10px;
+     margin-top: 10px;
+ }
+ .ranking-box table th, .ranking-box table td {
+     padding: 8px;
+     text-align: center;
+     border: 1px solid #ddd;
+ }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div>
+        <a href="/">Home</a>
+    </div>
+    <div>
+        <form action="/logout" method="post" style="display: inline;">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</div>
+
+<h1></h1><br>
+<div class="container">
+    <!-- 로그인된 사용자 정보 -->
+    <div class="user-info">
+        <h2>나의 정보</h2>
+        <table>
+            <tr>
+                <th>학번</th>
+                <th>이름</th>
+                <th>성별</th>
+            </tr>
+            <tr>
+                <td>{{ user_info.std_id }}</td>
+                <td>{{ user_info.name }}</td>
+                <td>{{ user_info.gender }}</td>
+            </tr>
+            <tr>
+                <th colspan="3">주소</th>
+            </tr>
+            <tr>
+                <td colspan="3">{{ user_info.address }}</td>
+            </tr>
+            <tr>
+                <th>국어</th>
+                <th>영어</th>
+                <th>수학</th>
+            </tr>
+            <tr>
+                <td>{{ user_info.korean }}</td>
+                <td>{{ user_info.english }}</td>
+                <td>{{ user_info.math }}</td>
+            </tr>
+        </table>
+        <!-- 정보 공개/비공개 여부 버튼 -->
+        <div style="margin-top: 20px;">
+            <button id="toggle-release-btn">
+                {% if user_info.release_state %}
+                점수 비공개하기
+                {% else %}
+                점수 공개하기
+                {% endif %}
+            </button>
+        </div>
+    </div>
+
+    <!-- 학생 검색 -->
+    <div class="search-section">
+        <h2>학생 검색</h2>
+        <form action="/student/search" method="get">
+            <label>학번으로 학생 검색:</label>
+            <input type="number" name="std_id" required>
+            <button type="submit">찾기</button>
+        </form>
+        <h2>검색 결과</h2>
+        {% if std_info %}
+        <table>
+            <tr>
+                <th>학번</th>
+                <th>이름</th>
+                <th>성별</th>
+            </tr>
+            <tr>
+                <td>{{ std_info.std_id }}</td>
+                <td>{{ std_info.name }}</td>
+                <td>{{ std_info.gender }}</td>
+            </tr>
+            <tr>
+                <th colspan="3">주소</th>
+            </tr>
+            <tr>
+                <td colspan="3">{{ std_info.address }}</td>
+            </tr>
+            <tr>
+                <th>국어</th>
+                <th>영어</th>
+                <th>수학</th>
+            </tr>
+            {% if std_info.release_state %}
+            <tr>
+                <td>{{ std_info.korean }}</td>
+                <td>{{ std_info.english }}</td>
+                <td>{{ std_info.math }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td>비공개</td>
+                <td>비공개</td>
+                <td>비공개</td>
+            </tr>
+            {% endif %}
+        </table>
+        {% else %}
+        <p>사용자 정보가 없습니다.</p>
+        {% endif %}
+    </div>
+
+    <!-- 과목별 랭킹 -->
+    <div class="ranking-section">
+        <h2>과목별 랭킹</h2>
+        <div>
+            <button onclick="fetchRanking('korean')">국어</button>
+            <button onclick="fetchRanking('english')">영어</button>
+            <button onclick="fetchRanking('math')">수학</button>
+        </div>
+        <div class="ranking-box">
+            <table id="ranking-table" border="1" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                <tr>
+                    <th>등수</th>
+                    <th>이름</th>
+                    <th>성적</th>
+                </tr>
+                </thead>
+                <tbody id="ranking-list">
+                <tr>
+                    <td colspan="3">과목을 선택하세요</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    <!-- 성적 정렬 기능   -->
+    function fetchRanking(subject) {
+      fetch(`/ranking/${subject}`)
+        .then(response => response.json())
+        .then(data => {
+          const rankingList = document.getElementById('ranking-list');
+          rankingList.innerHTML = ''; // 기존 내용 지우기
+
+          if (data.length === 0) {
+            rankingList.innerHTML = '<tr><td colspan="3">데이터가 없습니다.</td></tr>';
+            return;
+          }
+
+          data.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${student.rank}</td>
+              <td>${student.name}</td>
+              <td>${student.score}</td>
+            `;
+            rankingList.appendChild(row);
+          });
+        });
+    }
+
+<!--   점수 공개 비공개 버튼    -->
+          document.getElementById('toggle-release-btn')?.addEventListener('click', () => {
+        fetch('/toggle_release', { method: 'POST' })
+          .then(response => response.json())
+          .then(data => {
+            if (data.state === 'success') {
+              alert(data.message);
+              location.reload(); // 페이지 새로고침
+            } else {
+              alert('변경에 실패했습니다. 다시 시도해주세요.');
+            }
+          });
+      });
+</script>
+
+</body>
+</html>

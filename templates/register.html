@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar 스타일 */
+        .navbar {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container h1 {
+            color: #333;
+        }
+
+        .container form input {
+            width: calc(100% - 20px);
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .container form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .container form button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success-msg {
+            color: green;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>
+            <a href="/">Home</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>회원가입</h1>
+        {% if error_msg %}
+            <p class="error-msg">{{ error_msg }}</p>
+        {% endif %}
+        {% if success_msg %}
+            <p class="success-msg">{{ success_msg }}</p>
+        {% endif %}
+        <form action="/student/register" method="post">
+            <h3>학번 입력</h3>
+            <input type="number" name="std_id" placeholder="학번을 입력하세요" required>
+            <h3>아이디 입력</h3>
+            <input type="text" name="user_id" placeholder="아이디를 입력하세요" required>
+            <h3>비밀번호 입력</h3>
+            <input type="password" name="user_pw" placeholder="비밀번호를 입력하세요" required>
+            <button type="submit" >회원가입</button>
+        </form>
+    </div>
+</body>
+</html>

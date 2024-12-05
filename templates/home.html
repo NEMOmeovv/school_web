@@ -1,12 +1,135 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/html">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar 스타일 */
+        .navbar {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .logout-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .navbar .logout-btn:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .container form {
+            margin: 20px 0;
+        }
+
+        .container input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .container button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .container button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Home Page</h1>
-    <a href="/student/info">정보 확인하러 가기</a>
-    <a href="/test">test</a>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>
+            <a href="/">Home</a>
+            {% if session.user %}
+                <a href="/student/search_page">검색 페이지</a>
+            {% endif %}
+        </div>
+        <div>
+            {% if session.user %}
+                <span>안녕하세요, {{ session.user.user_id }}님!</span>
+                <form action="/logout" method="post" style="display: inline;">
+                    <button type="submit" class="logout-btn">로그아웃</button>
+                </form>
+
+            {% else %}
+                    <a href="/student/register">회원가입</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Home Page</h1>
+
+        {% if session.user %}
+            <p>안녕하세요, {{ session.user.user_id }}님! 원하는 페이지로 이동하세요.</p>
+        {% else %}
+            <form action="/login" method="post">
+                <input type="text" name="user_id" placeholder="아이디 입력" required>
+                <input type="password" name="user_pw" placeholder="비밀번호 입력" required><br>
+                <button type="submit">로그인</button>
+            </form>
+            <a href="/student/register">회원가입 하기</a>
+        {% endif %}
+
+        {% if login_status == 'fail' %}
+            <p class="error-message">{{ error_msg }}</p>
+        {% endif %}
+    </div>
 </body>
 </html>
